@@ -1,4 +1,4 @@
-from crypt import methods
+
 from flask import Flask, render_template, request
 import requests
 from bs4 import BeautifulSoup as bs
@@ -12,7 +12,7 @@ app = Flask(__name__)  # Initializing the flask app with the name "app"
 # base url
 @app.route("/", methods=['POST', 'GET'])
 def index():
-    if request.methods == "POST":
+    if request.method == "POST":
         # Obtaining the search string entered in the form
         searchString = request.form['content'].replace(" ", "")
         try:
@@ -89,21 +89,22 @@ def index():
                         custComment = comtag[0].div.text
                     except:
                         custComment = "No Customer Comment"
-                    fw.write(searchString + ","+name.replace(",", ":")+","+rating+"," +
-                             commentHead.replace(",", ":")+","+custComment.replace(",", ":"), +"\n")
+                    fw.write(searchString + ","+name.replace(",", ":")+","+Rating+"," +
+                             commentHead.replace(",", ":")+","+custComment.replace(",", ":") +"\n")
                     mydict = {"Product": searchString, "Name": name, "Rating": Rating,
                               "CommentHead": commentHead, "Comment": custComment}  # saving that detail to a dictionary
 
                     # insertig the dictionary containing the review comments to the collection
                     X = table.insert_one(mydict)
-                    
+
                     # appending the comments to the review list
                     reviews.append(mydict)
                 # showing the review to the user
-                return render_template("result.html", reviews=reviews)
+                return render_template("results.html", reviews=reviews)
         except Exception as e:
             print(e)
-            return render_template("error.html", error=e)
+            error = {'error': e}
+            return render_template("error.html", error=error)
     else:
         return render_template("index.html")
 

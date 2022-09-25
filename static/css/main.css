@@ -1,4 +1,5 @@
-body, html {
+body,
+html {
     margin: 0;
     font-family: sans-serif;
 }
@@ -8,7 +9,9 @@ body, html {
     width: 400px;
 }
 
-table, td, th {
+table,
+td,
+th {
     border: 1px solid #aaa;
 }
 
