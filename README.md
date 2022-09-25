@@ -21,4 +21,3 @@ In this project, we store the reviews in MongoDB so, that the next time a user s
 
 ![My Image](reviews.png)
 
-## [*Heroku link*]()

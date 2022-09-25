@@ -5,23 +5,27 @@ from bs4 import BeautifulSoup as bs
 from urllib.request import urlopen as uReq
 import pymongo
 
-
 app = Flask(__name__)  # Initializing the flask app with the name "app"
+
+
+
 
 
 # base url
 @app.route("/", methods=['POST', 'GET'])
 def index():
+    
     if request.method == "POST":
         # Obtaining the search string entered in the form
         searchString = request.form['content'].replace(" ", "")
         try:
             dbConn = pymongo.MongoClient(
-                "mongodb://localhost:27017/")  # connecting to mongoDB
+                "mongodb+srv://swapnil:swapnil@pymongo.fukkl.mongodb.net/?retryWrites=true&w=majority")  # connecting to mongoDB
             # connecting the database called crawlerDB if not present it will create
             db = dbConn['crawlerDB']
             # searching the collection with the name same as the keyword
             if searchString in db.list_collection_names():
+                
                 review = []
                 for reviews in db[searchString].find({}, {"_id": 0}):
                     review.append(reviews)
@@ -90,7 +94,7 @@ def index():
                     except:
                         custComment = "No Customer Comment"
                     fw.write(searchString + ","+name.replace(",", ":")+","+Rating+"," +
-                             commentHead.replace(",", ":")+","+custComment.replace(",", ":") +"\n")
+                             commentHead.replace(",", ":")+","+custComment.replace(",", ":") + "\n")
                     mydict = {"Product": searchString, "Name": name, "Rating": Rating,
                               "CommentHead": commentHead, "Comment": custComment}  # saving that detail to a dictionary
 
