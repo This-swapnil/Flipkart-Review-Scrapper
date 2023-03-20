@@ -20,7 +20,7 @@ def index():
         searchString = request.form['content'].replace(" ", "")
         try:
             dbConn = pymongo.MongoClient(
-                "mongodb+srv://swapnil:swapnil@pymongo.fukkl.mongodb.net/?retryWrites=true&w=majority")  # connecting to mongoDB
+                "Paste your MongoDb or Atlas Url here")  # connecting to mongoDB
             # connecting the database called crawlerDB if not present it will create
             db = dbConn['crawlerDB']
             # searching the collection with the name same as the keyword
